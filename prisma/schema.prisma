@@ -17,7 +17,25 @@ model User {
   password       String
   email          String   @unique
   avatar         String?
+
   created_at     DateTime @default(now())
+  updated_at     DateTime @default(now())
   
   @@map("users")
+  posts Post[]
+}
+
+model Post {
+  id            String @id @default(uuid())
+  author_id       String
+  name          String
+  description   String
+  file          String
+
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now())
+
+  author User @relation(fields: [author_id], references: [id])
+
+  @@map("posts")
 }
